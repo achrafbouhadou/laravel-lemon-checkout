@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'lemonsqueezy' => [
+    'api_key' => env('LEMONSQUEEZY_API_KEY'),
+    'webhook_secret' => env('LEMONSQUEEZY_WEBHOOK_SECRET'),
+    ]
+
 ];
