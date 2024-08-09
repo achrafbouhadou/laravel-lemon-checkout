@@ -32,9 +32,9 @@ class PaymentController extends Controller
         $signature = $request->header('X-Signature');
         try {
             $this->lemonSqueezyService->handleWebhook($payload, $signature);
-            return response()->json(['message' => 'Webhook processed successfully'], 200);
+            return response()->json(['success'=>true, 'message' => 'Webhook processed successfully'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response()->json(['success'=>false, 'error' => $e->getMessage()], 400);
         }
     }
 

@@ -5,8 +5,9 @@ namespace App\Services;
 use App\Strategies\Order\OrderStatusContext;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Support\Facades\Http;
+use IPaymentMethod;
 
-class LemonSqueezyService
+class LemonSqueezyService implements IPaymentMethod
 {
 
     protected $apiKey;
