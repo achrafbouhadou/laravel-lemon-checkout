@@ -13,11 +13,15 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::create([
-            'name' => 'Digital Product 1',
-            'description' => 'Description of Digital Product 1',
-            'price' => 19.99,
-            'lemonsqueezy_variant_id' => '479269', // Use the real variant ID from you  LemonSqueezy panel
-        ]);
+        Product::updateOrCreate(
+            [
+                'lemonsqueezy_variant_id' => '479269', 
+            ],
+            [
+                'name' => 'Rich Dad Poor Dad',
+                'description' => 'Rich Dad and Poor Dad. The best book ever.',
+                'price' => 19.99,
+            ]
+        );
     }
 }

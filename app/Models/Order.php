@@ -10,14 +10,12 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id',
         'status',
         'total',
         'currency',
         'email',
         'name',
         'order_items',
-        'shipping_address',
     ];
 
     protected $casts = [
