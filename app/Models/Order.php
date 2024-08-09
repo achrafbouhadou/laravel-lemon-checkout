@@ -15,6 +15,7 @@ class Order extends Model
         'currency',
         'email',
         'name',
+        'whatsapp_number',
         'order_items',
     ];
 
