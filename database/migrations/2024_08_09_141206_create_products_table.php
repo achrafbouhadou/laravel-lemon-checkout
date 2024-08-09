@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('price', 8, 2);
+            $table->string('image')->nullable();
             $table->string('lemonsqueezy_variant_id')->nullable(); // the product variant id in lemonsqueezy panel
             $table->timestamps();
         });

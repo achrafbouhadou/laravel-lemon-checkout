@@ -1,0 +1,107 @@
+<template>
+    <div class="bg-gray-50 flex justify-center py-10">
+        <div class="bg-white w-full max-w-5xl shadow-lg rounded-lg p-10 flex">
+            <!-- Left Section - Shipping and Payment Details -->
+            <div class="w-2/3 pr-8">
+                <h2 class="text-2xl font-semibold mb-6">Checkout</h2>
+
+                <div class="mb-10">
+                    <h3 class="text-lg font-medium mb-3">Payment Details</h3>
+                    <form @submit.prevent="handleSubmit">
+                        <InputField
+                            id="name"
+                            label="Name"
+                            placeholder="ex: John Doe"
+                            v-model="form.name"
+                            required
+                            :error="form.errors.name"
+                        />
+                        <InputField
+                            id="email"
+                            label="Email"
+                            type="email"
+                            placeholder="ex: Z5rJt@example.com"
+                            v-model="form.email"
+                            required
+                            :error="form.errors.email"
+
+                        />
+                        <InputField
+                            id="whatsapp"
+                            label="WhatsApp Number"
+                            placeholder="ex: +1 123 456 7890"
+                            v-model="form.whatsapp"
+                            :iconSrc=whatsappIcon
+                            :error="form.errors.whatsapp"
+
+                        />
+                        
+                        <PaymentMethodSelector 
+                            :methods="paymentMethods" 
+                            v-model="form.payment_method" 
+                        />
+
+                        <button 
+                            type="submit" 
+                            class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-5 rounded-md w-full transition-colors"
+                        >
+                            Purchase {{ total.toFixed(2) }} USD
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Section - Order Summary -->
+            <div class="w-1/3">
+                <OrderSummary :items="orderItems" :subtotal="subtotal" :shipping="shipping" :total="total" />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue';
+import stripeLogo from '@assets/images/stripeLogo.png';
+import paypalLogo from '@assets/images/Paypal_logo.png';
+import lemonSqueezyLogo from '@assets/images/lemon_squeezy_logo.jpeg';
+import whatsappIcon from '@assets/images/whatsapp_icon.png'; 
+import OrderSummary from '@/Components/OrderSummary.vue';
+import InputField from '@/Components/InputField.vue';
+import PaymentMethodSelector from '@/Components/PaymentMethodSelector.vue';
+import { useForm} from '@inertiajs/vue3';
+
+const form = useForm({
+    name: '',
+    email: '',
+    whatsapp: '',
+    payment_method: '',
+});
+
+
+
+const paymentMethods = ref([
+    { id: 'Stripe', name: 'Stripe', image: stripeLogo },
+    { id: 'paypal', name: 'PayPal', image: paypalLogo },
+    { id: 'lemonsqueezy', name: 'LemonSqueezy', image: lemonSqueezyLogo }
+]);
+
+const orderItems = ref([
+    { id: 3, name: 'Rich Dad Poor Dad', quantity: 1, price: 179, image: 'https://m.media-amazon.com/images/I/81bsw6fnUiL._SL1500_.jpg' }
+]);
+
+const subtotal = ref(537);
+const shipping = ref(0);
+const total = ref(537);
+
+const selectPaymentMethod = (methodId) => {
+    form.payment_method = methodId;
+};
+
+const handleSubmit = () => {
+    // todo handel the form
+    console.log('Form submitted:', form);
+};
+</script>
+
+<style scoped>
+</style>
