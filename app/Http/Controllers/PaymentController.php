@@ -41,6 +41,7 @@ class PaymentController extends Controller
     {
 
         $orderProduct = $this->orderService->createOrder($this->getRequestData($request->validated()));
+        $request->session()->put('order_id', $orderProduct['order']->id);
         if($request->payment_method == 'stripe') {
             // todo later
             return back()->withErrors(['message' => 'stripe payment method not implemented yet']);
@@ -94,6 +95,19 @@ class PaymentController extends Controller
             'email' => $data['email'],
             'price' => $product->price * 1, // todo handle quantity
         ];
+    }
+    public function  thankYou(Request $request)
+    {
+        $order = $this->orderService->getOrderBySessionId($request->session()->get('order_id'));
+
+        return Inertia::render('Payment/ThankYouPage' , 
+        [
+            'orderNumber' => $order->id,
+            'date' => $order->created_at->format('F d, Y'),
+            'email' => $order->email,
+            'name' => $order->name,
+            'total' => number_format($order->total, 2),
+        ]);
     }
 
 }
