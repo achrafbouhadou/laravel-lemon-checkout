@@ -16,6 +16,6 @@ Route::get('/checkout', function () {
 Route::get('/checkout/{product_id}', [PaymentController::class, 'show'])->name('checkout.show');
 
 Route::post('/process', [PaymentController::class, 'checkout'])->name('checkout');
-Route::post('/webhook', [PaymentController::class, 'handleWebhook'])->name('webhook');
+Route::post('/lemonsqueezy/webhook', [PaymentController::class, 'handleWebhook'])->name('webhook');
 
 
