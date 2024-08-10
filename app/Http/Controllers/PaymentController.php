@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Product;
 use App\Services\LemonSqueezyService;
+use App\Services\Order\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -12,14 +14,17 @@ class PaymentController extends Controller
 {
     
     protected LemonSqueezyService $lemonSqueezyService;
-    public function __construct(LemonSqueezyService $lemonSqueezyService)
+    protected OrderService  $orderService;
+    public function __construct(LemonSqueezyService $lemonSqueezyService , OrderService $orderService)
     {
         $this->lemonSqueezyService = $lemonSqueezyService;
+        $this->orderService = $orderService;
     }
 
     public function show($product_id)
     {
         try{
+            // always asuming that we can purchase just one product
             $product = Product::findOrFail($product_id);
             return Inertia::render('Payment/CheckoutPage', [
                 'product' => $product,
@@ -32,9 +37,24 @@ class PaymentController extends Controller
         
     }
 
-    public function checkout(Request $request )
+    public function checkout(OrderRequest $request) 
     {
-        $paymentSession = $this->lemonSqueezyService->createPaymentSession([]);
+
+        $orderProduct = $this->orderService->createOrder($this->getRequestData($request->validated()));
+        if($request->payment_method == 'stripe') {
+            // todo later
+            return back()->withErrors(['message' => 'stripe payment method not implemented yet']);
+
+        }elseif($request->payment_method == 'paypal') {
+            // todo later
+            return back()->withErrors(['message' => 'paypal payment method not implemented yet']);
+            
+        }elseif($request->payment_method == 'lemonsqueezy') {
+            $paymentSession = $this->lemonSqueezyService->createPaymentSession($this->buildPaymentData($request , $orderProduct['product']));
+            info($paymentSession);
+        }else{
+            return back()->withErrors(['message' => 'you need to select a valid payment method']);
+        }
 
         // Check if the payment session was created successfully
         if (isset($paymentSession['data']['attributes']['url'])) {
@@ -54,6 +74,27 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success'=>false, 'error' => $e->getMessage()], 400);
         }
+    }
+
+    protected function getRequestData($data)
+    {
+        return [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'whatsapp' => $data['whatsapp'],
+            'product_id' => $data['product_id'], // asuming that we can purchase just one product
+        ];
+    }
+
+    protected function buildPaymentData($data , $product)
+    {
+        return [
+            'store_id' => config('services.lemonsqueezy.store_id'),
+            'variant_id' =>  $product->lemonsqueezy_variant_id,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'price' => $product->price * 1, // todo handle quantity
+        ];
     }
 
 }

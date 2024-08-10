@@ -38,6 +38,7 @@ return [
     'lemonsqueezy' => [
     'api_key' => env('LEMONSQUEEZY_API_KEY'),
     'webhook_secret' => env('LEMONSQUEEZY_WEBHOOK_SECRET'),
+    'store_id' => env('LEMONSQUEEZY_STORE_ID'),
     ]
 
 ];

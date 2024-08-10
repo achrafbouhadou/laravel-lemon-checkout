@@ -79,6 +79,8 @@ const form = useForm({
     email: '',
     whatsapp: '',
     payment_method: '',
+    total: props.product.price,
+    product_id: props.product.id
 });
 
 
@@ -102,8 +104,9 @@ const selectPaymentMethod = (methodId) => {
 };
 
 const handleSubmit = () => {
-    // todo handel the form
-    console.log('Form submitted:', form);
+    form.post('/process', {
+    onSuccess: () => form.reset(),
+})
 };
 </script>
 
