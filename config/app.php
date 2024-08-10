@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'ngrok_url' => env('NGROK_URL', false),
+
 ];

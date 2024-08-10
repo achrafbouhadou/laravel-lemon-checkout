@@ -48,4 +48,8 @@ class OrderService
             throw $e;
         }
     }
+    public function getOrderBySessionId($orderId)
+    {
+        return Order::where('id', $orderId)->firstOrFail();
+    }
 }

@@ -13,6 +13,7 @@ class LemonSqueezyService implements IPaymentMethod
 
     protected $apiKey;
     protected $baseUrl = 'https://api.lemonsqueezy.com/v1';
+    protected $redirectUrl;
 
     private OrderStatusContext $orderStatusContext;
 
@@ -22,17 +23,20 @@ class LemonSqueezyService implements IPaymentMethod
     {
         $this->apiKey = config('services.lemonsqueezy.api_key');
         $this->orderStatusContext = $orderStatusContext;
+
+        $this->redirectUrl = config('app.ngrok_url').'/thank-you';
     }
 
     public function createPaymentSession($data)
     {
+
         $response = Http::withToken($this->apiKey)
             ->post("{$this->baseUrl}/checkouts", [
                 'data' => [
                     'type' => 'checkouts',
                     'attributes' => [
                         'product_options' => [
-                            'redirect_url' => 'http://laravel-lemon-checkout.test/',
+                            'redirect_url' => $this->redirectUrl,
                         ],
                         'checkout_data' => [
                             'name' => $data['name'],
