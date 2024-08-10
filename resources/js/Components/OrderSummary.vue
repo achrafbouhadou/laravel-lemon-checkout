@@ -7,7 +7,6 @@
                 <div>
                     <p class="font-medium">{{ item.name }}</p>
                 </div>
-                <p class="font-medium">{{ item.quantity }}</p>
                 <p class="font-medium">{{ item.price }} USD</p>
             </div>
         </div>
@@ -18,8 +17,8 @@
                 <p>{{ subtotal }} USD</p>
             </div>
             <div class="flex justify-between font-medium">
-                <p>Shipping</p>
-                <p>{{ shipping }} USD</p>
+                <p>Discount</p>
+                <p>{{ discount }} USD</p>
             </div>
             <div class="flex justify-between font-medium text-lg">
                 <p>Total</p>
