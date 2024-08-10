@@ -51,7 +51,6 @@ class PaymentController extends Controller
             
         }elseif($request->payment_method == 'lemonsqueezy') {
             $paymentSession = $this->lemonSqueezyService->createPaymentSession($this->buildPaymentData($request , $orderProduct['product']));
-            info($paymentSession);
         }else{
             return back()->withErrors(['message' => 'you need to select a valid payment method']);
         }

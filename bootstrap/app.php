@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+           'lemonsqueezy/webhook',
+            'http://laravel-lemon-checkout.test/lemonsqueezy/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

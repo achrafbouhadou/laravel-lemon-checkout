@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\OrderStatus;
 use App\Strategies\Order\OrderStatusContext;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Support\Facades\Http;
@@ -81,9 +82,13 @@ class LemonSqueezyService implements IPaymentMethod
 
     protected function handleOrderCreated($orderData)
     {
-        $status = $orderData['attributes']['status'];
-
         try {
+            $statusString = $orderData['attributes']['status'];
+            // Convert to enum
+            $status = OrderStatus::from(strtolower($statusString)); // exemple  Convert "paid" to OrderStatus::PAID
+            if (!$status) {
+                throw new \Exception('Invalid order status');
+            }
             $orderStatusStrategy = $this->orderStatusContext->determineStrategy($status);
             $this->orderStatusContext->setStrategy($orderStatusStrategy);
             $this->orderStatusContext->handleOrder($orderData);
