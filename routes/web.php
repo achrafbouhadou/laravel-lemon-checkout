@@ -15,3 +15,7 @@ Route::get('/checkout', function () {
 // for our case i will assume that we can purchase just one product at a time
 Route::get('/checkout/{product_id}', [PaymentController::class, 'show'])->name('checkout.show');
 
+Route::post('/process', [PaymentController::class, 'checkout'])->name('checkout');
+Route::post('/webhook', [PaymentController::class, 'handleWebhook'])->name('webhook');
+
+

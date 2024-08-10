@@ -30,18 +30,28 @@ class LemonSqueezyService implements IPaymentMethod
                 'data' => [
                     'type' => 'checkouts',
                     'attributes' => [
-                        'store_id' => $data['store_id'],
-                        'variant_id' => $data['variant_id'],
-                        'custom_price' => $data['custom_price'] ?? null,
-                        'product_options' => $data['product_options'] ?? null,
+                        'product_options' => [
+                            'redirect_url' => 'http://laravel-lemon-checkout.test/',
+                        ],
                         'checkout_data' => [
                             'name' => $data['name'],
                             'email' => $data['email'],
-                            'billing_address' => $data['billing_address'] ?? null,
-                            'tax_number' => $data['tax_number'] ?? null,
-                            'discount_code' => $data['discount_code'] ?? null,
                         ],
                     ],
+                    'relationships' => [
+                        'store' => [
+                            'data' => [
+                                'type' => 'stores',
+                                'id' => $data['store_id']
+                            ]
+                        ],
+                        'variant' => [
+                            'data' => [
+                                'type' => 'variants',
+                                'id' => $data['variant_id']
+                            ]
+                        ]
+                    ]
                 ],
             ]);
 

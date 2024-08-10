@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->string('transaction_id')->unique();
-            $table->enum('status', ['processing', 'paid', 'failed',  'refunded', 'partial_refund'])->default('processing');
+            $table->string('status', 100);
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('USD');
             $table->string('payment_method');
