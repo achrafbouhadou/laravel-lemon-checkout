@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Strategies\Order\OrderStatusContext;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Support\Facades\Http;
-use IPaymentMethod;
+use App\Interfaces\IPaymentMethod;
 
 class LemonSqueezyService implements IPaymentMethod
 {

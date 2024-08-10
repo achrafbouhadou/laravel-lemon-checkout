@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Interfaces;
 use Illuminate\Support\Arr;
 
 interface IPaymentMethod

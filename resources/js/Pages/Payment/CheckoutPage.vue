@@ -4,7 +4,6 @@
             <!-- Left Section - Shipping and Payment Details -->
             <div class="w-2/3 pr-8">
                 <h2 class="text-2xl font-semibold mb-6">Checkout</h2>
-
                 <div class="mb-10">
                     <h3 class="text-lg font-medium mb-3">Payment Details</h3>
                     <form @submit.prevent="handleSubmit">
@@ -45,7 +44,7 @@
                             type="submit" 
                             class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-5 rounded-md w-full transition-colors"
                         >
-                            Purchase {{ total.toFixed(2) }} USD
+                            Purchase {{ total }} USD
                         </button>
                     </form>
                 </div>
@@ -53,7 +52,7 @@
 
             <!-- Right Section - Order Summary -->
             <div class="w-1/3">
-                <OrderSummary :items="orderItems" :subtotal="subtotal" :shipping="shipping" :total="total" />
+                <OrderSummary :items="orderItems" :subtotal="subtotal"  :total="total" :discount="discount" />
             </div>
         </div>
     </div>
@@ -69,6 +68,11 @@ import OrderSummary from '@/Components/OrderSummary.vue';
 import InputField from '@/Components/InputField.vue';
 import PaymentMethodSelector from '@/Components/PaymentMethodSelector.vue';
 import { useForm} from '@inertiajs/vue3';
+
+const props = defineProps({
+    product : Object
+});
+
 
 const form = useForm({
     name: '',
@@ -86,12 +90,12 @@ const paymentMethods = ref([
 ]);
 
 const orderItems = ref([
-    { id: 3, name: 'Rich Dad Poor Dad', quantity: 1, price: 179, image: 'https://m.media-amazon.com/images/I/81bsw6fnUiL._SL1500_.jpg' }
+    props.product
 ]);
 
-const subtotal = ref(537);
-const shipping = ref(0);
-const total = ref(537);
+const subtotal = ref(props.product.price); // assume that we could just purchase one product (todo)
+const discount = ref(0); // assume discount is 0 (todo)
+const total = ref(subtotal.value);
 
 const selectPaymentMethod = (methodId) => {
     form.payment_method = methodId;
