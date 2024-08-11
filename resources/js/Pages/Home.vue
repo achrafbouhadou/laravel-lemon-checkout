@@ -11,7 +11,7 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">{{ product.name }}</h3>
             <p class="text-gray-700 mb-4">{{ product.description }}</p>
-            <p class="text-teal-600 font-bold text-lg">{{ product.price }} USD</p>
+            <p class="text-teal-600 font-bold text-lg">{{ product.price }} MAD</p>
             <button 
               @click="goToProduct(product.id)" 
               class="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"

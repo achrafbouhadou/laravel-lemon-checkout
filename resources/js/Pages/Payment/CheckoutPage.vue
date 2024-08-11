@@ -12,16 +12,15 @@
                             label="Name"
                             placeholder="ex: John Doe"
                             v-model="form.name"
-                            required
+                            
                             :error="form.errors.name"
                         />
                         <InputField
                             id="email"
                             label="Email"
-                            type="email"
                             placeholder="ex: Z5rJt@example.com"
                             v-model="form.email"
-                            required
+                            
                             :error="form.errors.email"
 
                         />
@@ -38,13 +37,15 @@
                         <PaymentMethodSelector 
                             :methods="paymentMethods" 
                             v-model="form.payment_method" 
+
+                            :error="form.errors.payment_method"
                         />
 
                         <button 
                             type="submit" 
                             class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-5 rounded-md w-full transition-colors"
                         >
-                            Purchase {{ total }} USD
+                            Purchase {{ total }} MAD
                         </button>
                     </form>
                 </div>
@@ -68,6 +69,9 @@ import OrderSummary from '@/Components/OrderSummary.vue';
 import InputField from '@/Components/InputField.vue';
 import PaymentMethodSelector from '@/Components/PaymentMethodSelector.vue';
 import { useForm} from '@inertiajs/vue3';
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const props = defineProps({
     product : Object
@@ -86,7 +90,7 @@ const form = useForm({
 
 
 const paymentMethods = ref([
-    { id: 'Stripe', name: 'Stripe', image: stripeLogo },
+    { id: 'stripe', name: 'Stripe', image: stripeLogo },
     { id: 'paypal', name: 'PayPal', image: paypalLogo },
     { id: 'lemonsqueezy', name: 'LemonSqueezy', image: lemonSqueezyLogo }
 ]);
@@ -105,7 +109,15 @@ const selectPaymentMethod = (methodId) => {
 
 const handleSubmit = () => {
     form.post('/process', {
-    onSuccess: () => form.reset(),
+        onSuccess: () => {
+            form.reset();
+            toast.success("Order processed successfully!");
+        },
+        onError: () => {
+            if (form.errors.message){
+                toast.error(form.errors.message);
+            }
+        }
 })
 };
 </script>

@@ -7,22 +7,22 @@
                 <div>
                     <p class="font-medium">{{ item.name }}</p>
                 </div>
-                <p class="font-medium">{{ item.price }} USD</p>
+                <p class="font-medium">{{ item.price }} MAD</p>
             </div>
         </div>
 
         <div class="space-y-3">
             <div class="flex justify-between font-medium">
                 <p>Subtotal</p>
-                <p>{{ subtotal }} USD</p>
+                <p>{{ subtotal }} MAD</p>
             </div>
             <div class="flex justify-between font-medium">
                 <p>Discount</p>
-                <p>{{ discount }} USD</p>
+                <p>{{ discount }} MAD</p>
             </div>
             <div class="flex justify-between font-medium text-lg">
                 <p>Total</p>
-                <p>{{ total }} USD</p>
+                <p>{{ total }} MAD</p>
             </div>
         </div>
     </div>
