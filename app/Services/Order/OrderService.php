@@ -55,6 +55,9 @@ class OrderService
 
     public function updateOrderStatus($orderId, $status)
     {
-        return Order::where('id', $orderId)->update(['status' => $status]);
+        $order = Order::where('id', $orderId)->first();
+        $order->status = $status;
+        $order->save();
+        return $order;
     }
 }
