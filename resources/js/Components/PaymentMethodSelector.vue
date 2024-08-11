@@ -1,7 +1,14 @@
 <template>
     <div class="mb-6">
         <h3 class="text-lg font-medium mb-3">Payment Method</h3>
+        <p
+                class="text-red-500"
+                v-if="error"
+            >
+                {{ error }}
+            </p>
         <div class="flex space-x-4">
+           
             <div
                 v-for="method in methods"
                 :key="method.id"
@@ -21,6 +28,7 @@ import { defineProps, defineEmits } from 'vue';
 const props = defineProps({
     methods: Array,
     modelValue: String,
+    error: String
 });
 
 const emit = defineEmits(['update:modelValue']);

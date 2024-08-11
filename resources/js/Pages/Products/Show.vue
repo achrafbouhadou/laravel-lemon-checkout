@@ -10,7 +10,7 @@
         <div class="lg:w-1/2">
           <h1 class="text-4xl font-semibold mb-4">{{ product.name }}</h1>
           <p class="text-gray-600 mb-6">{{ product.description }}</p>
-          <p class="text-teal-600 font-bold text-2xl mb-6">{{ product.price }} USD</p>
+          <p class="text-teal-600 font-bold text-2xl mb-6">{{ product.price }} MAD</p>
   
           <!-- Buy Now Button -->
           <button 
