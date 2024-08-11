@@ -6,7 +6,7 @@ This is a simple Laravel-based checkout system integrated with Lemon Squeezy, de
 
 - [Features](#features)
 - [Requirements](#requirements)
-- [User Story](#User Story)
+- [User Story](#UserStory)
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -73,7 +73,7 @@ If your Laravel application is running on port 8000, you can expose it using Ngr
   ```
 - After setting up Ngrok and getting your public URL, go to your Lemon Squeezy dashboard and navigate to **Settings** -> **Webhooks**.
 - Click on **plus icon**.
-- In the **URL** field, enter the Ngrok URL followed by followed by `/lemonsqueezy/webhook`. For example, if your Ngrok URL 
+- In the **URL** field, enter the Ngrok URL followed by followed by `/lemonsqueezy/webhook`. 
 - **Signing Secret:** In the **Signing Secret** field, enter a strong secret key. This secret is crucial as it will be used by your Laravel application to validate the authenticity of incoming webhook requests from Lemon Squeezy. Make sure to store this secret securely in your environment configuration (e.g., `.env` file).
 
 - **Event Subscription:** Scroll down to the events section and subscribe to the `order_created` event. This event will trigger the webhook whenever a new order is created in your Lemon Squeezy store.
