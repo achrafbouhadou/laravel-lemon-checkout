@@ -65,7 +65,6 @@ const props = defineProps({
 const completeShopping = () => {
     router.get(`/`);
 
-    // Redirect the user back to the home page or shop page
 };
 </script>
 
