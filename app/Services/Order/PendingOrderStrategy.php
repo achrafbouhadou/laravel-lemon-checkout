@@ -12,7 +12,7 @@ class PendingOrderStrategy implements OrderStatusStrategyInterface
         $orderId = $data['id'];
         $customerId = $data['attributes']['customer_id'];
         $productDetails = $data['attributes']['first_order_item'];
-
+        // something to do if we need to handle pending status
         // Log the pending status
         Log::info("Order $orderId for customer $customerId is pending.");
 

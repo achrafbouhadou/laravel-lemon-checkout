@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Log;
 
 class FailedOrderStrategy implements OrderStatusStrategyInterface
 {
+    public function __construct() {
+        
+    }
     public function handle(array $data): void
     {
         $orderId = $data['id'];
