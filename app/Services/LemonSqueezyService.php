@@ -27,7 +27,7 @@ class LemonSqueezyService implements IPaymentMethod
         $this->apiKey = config('services.lemonsqueezy.api_key');
         $this->orderStatusContext = $orderStatusContext;
 
-        $this->redirectUrl = config('app.ngrok_url').'/thank-you';
+        $this->redirectUrl = config('app.url').'/thank-you';
     }
 
     public function createPaymentSession($data)

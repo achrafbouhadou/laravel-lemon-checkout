@@ -50,6 +50,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
+
 
 const props = defineProps({
     orderNumber: String,
@@ -61,6 +63,8 @@ const props = defineProps({
 
 
 const completeShopping = () => {
+    router.get(`/`);
+
     // Redirect the user back to the home page or shop page
 };
 </script>
