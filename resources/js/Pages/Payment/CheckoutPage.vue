@@ -44,6 +44,7 @@
                         <button 
                             type="submit" 
                             class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-5 rounded-md w-full transition-colors"
+                            :disabled="form.processing"
                         >
                             Purchase {{ total }} MAD
                         </button>
@@ -102,6 +103,7 @@ const orderItems = ref([
 const subtotal = ref(props.product.price); // assume that we could just purchase one product (todo)
 const discount = ref(0); // assume discount is 0 (todo)
 const total = ref(subtotal.value);
+const loading = ref(false);
 
 const selectPaymentMethod = (methodId) => {
     form.payment_method = methodId;
