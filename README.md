@@ -85,7 +85,7 @@ If your Laravel application is running on port 8000, you can expose it using Ngr
 1. **Clone the repository:**
 
    ```bash
-   git clone [https://github.com/yourusername/laravel-lemon-checkout.git](https://github.com/achrafbouhadou/laravel-lemon-checkout.git)
+   git clone https://github.com/achrafbouhadou/laravel-lemon-checkout.git
    cd laravel-lemon-checkout
    ```
 2. **Install dependencies**
