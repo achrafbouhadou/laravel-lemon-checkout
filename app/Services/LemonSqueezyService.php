@@ -32,7 +32,6 @@ class LemonSqueezyService implements IPaymentMethod
 
     public function createPaymentSession($data)
     {
-        info("Lemon squezzzy service : " . $data['order_id']);
         try{
             $response = Http::withToken($this->apiKey)
             ->post("{$this->baseUrl}/checkouts", [
@@ -108,11 +107,9 @@ class LemonSqueezyService implements IPaymentMethod
             }
             $orderStatusStrategy = $this->orderStatusContext->determineStrategy($status);
             $this->orderStatusContext->setStrategy($orderStatusStrategy);
-            $this->orderStatusContext->handleOrder($orderData);
-            info("Order ID {$orderId}");
             $details = new PaymentDetailsDto($orderData, $orderId, $status);
-            //TODO: call order created event with payload
             event(new OrderCreatedEvent($details));
+            $this->orderStatusContext->handleOrder($orderData);
         } catch (\Exception $e) {
             info('Error handling order status: ' . $e->getMessage());
         }

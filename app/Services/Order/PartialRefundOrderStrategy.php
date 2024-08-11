@@ -16,6 +16,6 @@ class PartialRefundOrderStrategy implements OrderStatusStrategyInterface
         // Log the partial refund
         Log::info("Order $orderId for customer $customerId has received a partial refund.");
 
-        // todo send email and update order status
+        // handle partial refund
     }
 }

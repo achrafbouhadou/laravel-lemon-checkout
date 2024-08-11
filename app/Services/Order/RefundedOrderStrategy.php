@@ -16,7 +16,7 @@ class RefundedOrderStrategy implements OrderStatusStrategyInterface
         // Log the refund
         Log::info("Order $orderId for customer $customerId has been refunded.");
 
-        // todo send email and update order status
+        // handle refund
        
     }
 }

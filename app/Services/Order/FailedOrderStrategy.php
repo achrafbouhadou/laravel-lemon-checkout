@@ -3,8 +3,9 @@
 namespace App\Services\Order;
 
 use App\Interfaces\Order\OrderStatusStrategyInterface;
+use App\Mail\OrderFailedMail;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Mail;
 
 class FailedOrderStrategy implements OrderStatusStrategyInterface
 {
@@ -13,12 +14,10 @@ class FailedOrderStrategy implements OrderStatusStrategyInterface
     }
     public function handle(array $data): void
     {
-        $orderId = $data['id'];
-        $customerId = $data['attributes']['customer_id'];
+        $customerEmail = $data['attributes']['user_email'];
 
-        // Log the failed payment
-        Log::warning("Order $orderId for customer $customerId has failed.");
+        // Send the order failed email
+        Mail::to($customerEmail)->queue(new OrderFailedMail($data));
 
-        // todo send email and update order status
     }
 }
