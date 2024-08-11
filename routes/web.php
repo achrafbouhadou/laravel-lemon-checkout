@@ -1,15 +1,12 @@
 <?php
 
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
-Route::get('/checkout', function () {
-    return Inertia::render('Payment/CheckoutPage');
-});
+Route::get('/', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 // if we use the cart feature, we can just create new table called cart and in the checkout view collect al data from cart and pass it to payment page
 // or for guest we could use the session and pass it to payment page ...
 // for our case i will assume that we can purchase just one product at a time
