@@ -74,7 +74,7 @@ class LemonSqueezyService implements IPaymentMethod
         $event = json_decode($payload, true);
 
         if($event['meta']['event_name'] == self::WEBHOOK_ORDER_CREATED) {
-            $this->handleOrderCreated($event['data']);
+            $this->handleOrderCreatedEvent($event['data']);
         }
     }
 
@@ -84,7 +84,7 @@ class LemonSqueezyService implements IPaymentMethod
         return hash_equals($computedSignature, $signature);
     }
 
-    protected function handleOrderCreated($orderData)
+    protected function handleOrderCreatedEvent($orderData)
     {
         try {
             $statusString = $orderData['attributes']['status'];
@@ -96,6 +96,7 @@ class LemonSqueezyService implements IPaymentMethod
             $orderStatusStrategy = $this->orderStatusContext->determineStrategy($status);
             $this->orderStatusContext->setStrategy($orderStatusStrategy);
             $this->orderStatusContext->handleOrder($orderData);
+            
         } catch (\Exception $e) {
             info('Error handling order status: ' . $e->getMessage());
         }

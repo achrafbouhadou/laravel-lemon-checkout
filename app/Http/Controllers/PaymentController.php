@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentsGateway;
 use App\Http\Requests\OrderRequest;
 use App\Models\Product;
 use App\Services\LemonSqueezyService;
@@ -40,17 +41,13 @@ class PaymentController extends Controller
     public function checkout(OrderRequest $request) 
     {
 
-        $orderProduct = $this->orderService->createOrder($this->getRequestData($request->validated()));
+        $orderProduct = $this->orderService->createOrder($request->validated());
         $request->session()->put('order_id', $orderProduct['order']->id);
-        if($request->payment_method == 'stripe') {
-            // todo later
-            return back()->withErrors(['message' => 'stripe payment method not implemented yet']);
-
-        }elseif($request->payment_method == 'paypal') {
-            // todo later
-            return back()->withErrors(['message' => 'paypal payment method not implemented yet']);
-            
-        }elseif($request->payment_method == 'lemonsqueezy') {
+        $unsupportedPaymentMethods = [PaymentsGateway::STRIPE->value , PaymentsGateway::PAYPAL->value];
+        $paymentMethod = $request->payment_method;
+        if(in_array($paymentMethod , $unsupportedPaymentMethods)) {
+            return back()->withErrors(['message' => $paymentMethod . ' payment method not implemented yet']);
+        }elseif($paymentMethod == PaymentsGateway::LEMONSQUEEZY->value) {
             $paymentSession = $this->lemonSqueezyService->createPaymentSession($this->buildPaymentData($request , $orderProduct['product']));
         }else{
             return back()->withErrors(['message' => 'you need to select a valid payment method']);
@@ -76,15 +73,6 @@ class PaymentController extends Controller
         }
     }
 
-    protected function getRequestData($data)
-    {
-        return [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'whatsapp' => $data['whatsapp'],
-            'product_id' => $data['product_id'], // asuming that we can purchase just one product
-        ];
-    }
 
     protected function buildPaymentData($data , $product)
     {

@@ -52,4 +52,9 @@ class OrderService
     {
         return Order::where('id', $orderId)->firstOrFail();
     }
+
+    public function updateOrderStatus($orderId, $status)
+    {
+        return Order::where('id', $orderId)->update(['status' => $status]);
+    }
 }
